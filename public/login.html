@@ -66,10 +66,9 @@
       const data = await res.json();
       resultDiv.textContent = data.message || 'Login complete.';
       resultDiv.style.display = 'block';
-      if (data.success) {
-        if (data.idToken) {
-          document.cookie = "firebase_id_token=" + data.idToken + "; path=/";
-        }
+      if (data.success && data.idToken) {
+        // Set the idToken as a cookie for backend authentication
+        document.cookie = 'firebase_id_token=' + data.idToken + '; path=/; SameSite=None; Secure';
         setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
       }
     };

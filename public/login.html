@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - DeepView</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <!-- Navigation-->
+  <nav class="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="/">DeepView</a>
+      <div class="nav-links">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link active" href="/login">Login</a>
+        <a class="nav-link" href="/register">Register</a>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header-->
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=60')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="site-heading">
+        <h1>Login</h1>
+        <span class="subheading">Access your DeepView account</span>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content-->
+  <div class="container" style="display:flex;justify-content:center;align-items:center;min-height:50vh;">
+    <div class="main-content" style="max-width:370px;width:100%;padding:1.1rem 0.7rem;box-shadow:0 1px 8px rgba(0,191,174,0.10);border-radius:0.7rem;background:rgba(255,255,255,0.92);margin:2rem auto;">
+      <form id="login-form" autocomplete="on" style="margin:0;">
+        <div class="form-floating" style="margin-bottom:0.7rem;">
+          <input class="form-control" id="email" name="email" type="email" placeholder="Email" required style="font-size:0.97rem;padding:0.7rem 0.7rem;" />
+          <label for="email" style="font-size:0.93rem;">Email address</label>
+        </div>
+        <div class="form-floating" style="margin-bottom:0.7rem;">
+          <input class="form-control" id="password" name="password" type="password" placeholder="Password" required style="font-size:0.97rem;padding:0.7rem 0.7rem;" />
+          <label for="password" style="font-size:0.93rem;">Password</label>
+        </div>
+        <button type="submit" class="btn-main" style="width:100%;margin:0.5rem 0 0 0;">Login</button>
+      </form>
+      <div id="login-result" style="display:none;margin-top:1rem;text-align:center;font-size:1rem;color:#00897b;"></div>
+      <p class="text-center" style="margin:0.7rem 0 0 0;font-size:0.93rem;">Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+  </div>
+  <!-- Footer-->
+  <footer>
+    <div class="container">
+      <small>Copyright &copy; DeepView 2025</small>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('login-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const resultDiv = document.getElementById('login-result');
+      resultDiv.style.display = 'none';
+      const res = await fetch('/login_user', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      resultDiv.textContent = data.message || 'Login complete.';
+      resultDiv.style.display = 'block';
+      if (data.success) {
+        if (data.idToken) {
+          document.cookie = "firebase_id_token=" + data.idToken + "; path=/";
+        }
+        setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
+      }
+    };
+  </script>
+</body>
+</html>

@@ -58,8 +58,8 @@ async def analyze_image(file: UploadFile = File(...)):
     #text explanation for the IARC Monographs
     iarc_explanation = ("\n\nLegend:\n"
         "🟥 Group 1 – Carcinogenic to humans: Sufficient evidence in humans.\n"
-        "🟧 Group 2A – Probably carcinogenic: Limited in humans, sufficient in animals.\n"
-        "🟨 Group 2B – Possibly carcinogenic: Limited in humans, insufficient in animals.\n"
+        "🟧 Group 2A – Probably carcinogenic: Limited evidence in humans, sufficient evidence in animals.\n"
+        "🟨 Group 2B – Possibly carcinogenic: Limited evidence in humans, insufficient evidence in animals.\n"
         "🟩 Group 3 – Not classifiable or not carcinogenic: Inadequate evidence or not listed.\n")
 
 
@@ -68,7 +68,7 @@ async def analyze_image(file: UploadFile = File(...)):
     "Your job is to extract all ingredients from the product label image and classify each one according to IARC Monographs Group 1, 2A, 2B, or 3. If the name is commercial, brand-based, abbreviated (e.g., 'E-numbers'), or in common terms, identify the equivalent scientific or chemical name from the IARC list provided.\n\n"
     "Use this IARC reference table for classification (chemical name | group | explanation):\n\n"
     f"{csv_content}\n\n"
-    "Now, extract each ingredient you can find in the image. Match it to the IARC data.\n"
+    "And extract each ingredient you can find in the image. Match it to the IARC reference table.\n"
     "Output must follow this format (no extra explanation or text):\n\n"
     "**Ingredient | IARC Classification | Explanation (if needed)**\n\n"
     "Legend:\n"
@@ -77,7 +77,8 @@ async def analyze_image(file: UploadFile = File(...)):
     "🟨 = Possibly carcinogenic\n"
     "🟩 = Not classifiable or not carcinogenic\n\n"
     
-    "If the classification is not 🟩, include a short explanation (max 10 words)."
+    "If the classification is not 🟩, include a short explanation (max 12 words or less)."
+    "Identify the language of the text in the image and respond in that language."
     )
 
 

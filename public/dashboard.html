@@ -8,9 +8,12 @@
 </head>
 <body>
   <!-- Navigation-->
-  <nav class="navbar">
-    <div class="container">
-      <a class="navbar-brand" href="/">DeepView</a>
+  <nav class="navbar" style="box-shadow:0 2px 12px rgba(0,191,174,0.07);background:rgba(255,255,255,0.97);backdrop-filter:blur(6px);">
+    <div class="container" style="display:flex;align-items:center;gap:1.2rem;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:0.7rem;">
+        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" style="height:48px;width:auto;display:inline-block;vertical-align:middle;background:rgba(0,137,123,0.07);border-radius:12px;padding:4px 8px;box-shadow:0 1px 6px rgba(0,191,174,0.10);">
+        <a class="navbar-brand" href="/" style="font-size:1.7rem;font-weight:700;color:#00897b;letter-spacing:0.5px;text-shadow:0 1px 6px rgba(0,191,174,0.08);">DeepView</a>
+      </div>
       <div class="nav-links" id="navLinks">
         <a class="nav-link" href="/">Home</a>
         <a class="nav-link active" href="/dashboard">Dashboard</a>
@@ -19,14 +22,16 @@
     </div>
   </nav>
   <!-- Page Header-->
-  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=60')">
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=60');position:relative;">
     <div class="overlay"></div>
-    <div class="container">
+    <div class="container" style="position:relative;z-index:2;">
       <div class="site-heading">
+        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60vw;max-width:420px;opacity:0.13;z-index:1;pointer-events:none;user-select:none;">
         <h1>Your Dashboard</h1>
         <span class="subheading">Analyze ingredients with a single scan</span>
       </div>
     </div>
+    
   </header>
   <!-- Main Content-->
   <div class="container" style="display:flex;justify-content:center;align-items:center;min-height:50vh;">

@@ -15,6 +15,7 @@
         <a class="nav-link" href="/">Home</a>
         <a class="nav-link active" href="/login">Login</a>
         <a class="nav-link" href="/register">Register</a>
+        <a class="nav-link" href="#" onclick="logout();return false;">Logout</a>
       </div>
     </div>
   </nav>
@@ -53,6 +54,10 @@
     </div>
   </footer>
   <script>
+    function logout() {
+      document.cookie = 'firebase_id_token=; Max-Age=0; path=/;';
+      window.location.href = '/login';
+    }
     document.getElementById('login-form').onsubmit = async function(e) {
       e.preventDefault();
       const form = e.target;
@@ -67,8 +72,8 @@
       resultDiv.textContent = data.message || 'Login complete.';
       resultDiv.style.display = 'block';
       if (data.success && data.idToken) {
-        // Set the idToken as a cookie for backend authentication
-        document.cookie = 'firebase_id_token=' + data.idToken + '; path=/; SameSite=None; Secure';
+        // For local dev, do NOT use SameSite=None; Secure
+        document.cookie = 'firebase_id_token=' + data.idToken + '; path=/';
         setTimeout(() => { window.location.href = '/dashboard'; }, 1200);
       }
     };

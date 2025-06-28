@@ -98,7 +98,7 @@ async def register_user(request: Request):
     password = form.get("password")
     username = form.get("username")
     try:
-        user = auth.create_user(
+        user = firebase_auth.create_user(
             email=email,
             password=password,
             display_name=username

@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - DeepView</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <!-- Navigation -->
+  <!-- Navigation-->
   <nav class="navbar">
     <div class="container">
-      <div class="logo-group">
-        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" class="logo-img">
+      <div style="display:flex;align-items:center;gap:0.7rem;">
+        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" style="height:48px;width:auto;display:inline-block;vertical-align:middle;background:rgba(0,137,123,0.07);border-radius:12px;padding:4px 8px;box-shadow:0 1px 6px rgba(0,191,174,0.10);">
       </div>
       <div class="nav-links">
         <a class="nav-link" href="/">Home</a>
@@ -20,20 +20,18 @@
       </div>
     </div>
   </nav>
-
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=60');">
+  <!-- Page Header-->
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=60');position:relative;">
     <div class="overlay"></div>
-    <div class="container">
+    <div class="container" style="position:relative;z-index:2;">
       <div class="site-heading">
-        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" class="watermark-img">
+        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60vw;max-width:420px;opacity:0.13;z-index:1;pointer-events:none;user-select:none;">
         <h1>Login</h1>
         <span class="subheading">Access your DeepView account</span>
       </div>
     </div>
   </header>
-
-  <!-- Main Content -->
+  <!-- Main Content-->
   <div class="container" style="display:flex;justify-content:center;align-items:center;min-height:50vh;">
     <div class="main-content">
       <form id="login-form" autocomplete="on">
@@ -47,25 +45,21 @@
         </div>
         <button type="submit" class="btn-main">Login</button>
       </form>
-      <div id="login-result" style="display:none;margin-top:1rem;text-align:center;font-size:1rem;color:#1565c0;"></div>
+      <div id="login-result" style="display:none;margin-top:1rem;text-align:center;font-size:1rem;color:#00897b;"></div>
       <p class="text-center" style="margin:0.7rem 0 0 0;font-size:0.93rem;">Don't have an account? <a href="/register">Register here</a></p>
     </div>
   </div>
-
-  <!-- Footer -->
+  <!-- Footer-->
   <footer>
     <div class="container">
-      <small>&copy; DeepView 2025</small>
+      <small>Copyright &copy; DeepView 2025</small>
     </div>
   </footer>
-
   <script>
-    // Authentication and login logic
     function logout() {
       document.cookie = 'firebase_id_token=; Max-Age=0; path=/;';
       window.location.href = '/login';
     }
-    // Redirect to dashboard if already logged in
     function getCookie(name) {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);

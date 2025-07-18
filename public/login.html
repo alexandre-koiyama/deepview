@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - DeepView</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <!-- Navigation-->
-  <nav class="navbar" style="box-shadow:0 2px 12px rgba(0,191,174,0.07);background:rgba(255,255,255,0.97);backdrop-filter:blur(6px);">
-    <div class="container" style="display:flex;align-items:center;gap:1.2rem;justify-content:space-between;">
-      <div style="display:flex;align-items:center;gap:0.7rem;">
-        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" style="height:48px;width:auto;display:inline-block;vertical-align:middle;background:rgba(0,137,123,0.07);border-radius:12px;padding:4px 8px;box-shadow:0 1px 6px rgba(0,191,174,0.10);">
-    
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo-group">
+        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" class="logo-img">
       </div>
       <div class="nav-links">
         <a class="nav-link" href="/">Home</a>
@@ -21,49 +20,52 @@
       </div>
     </div>
   </nav>
-  <!-- Page Header-->
-  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=60');position:relative;">
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=60');">
     <div class="overlay"></div>
-    <div class="container" style="position:relative;z-index:2;">
+    <div class="container">
       <div class="site-heading">
-        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60vw;max-width:420px;opacity:0.13;z-index:1;pointer-events:none;user-select:none;">
+        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" class="watermark-img">
         <h1>Login</h1>
         <span class="subheading">Access your DeepView account</span>
       </div>
     </div>
-    
   </header>
-  <!-- Main Content-->
+
+  <!-- Main Content -->
   <div class="container" style="display:flex;justify-content:center;align-items:center;min-height:50vh;">
-    <div class="main-content" style="max-width:370px;width:100%;padding:1.1rem 0.7rem;box-shadow:0 1px 8px rgba(0,191,174,0.10);border-radius:0.7rem;background:rgba(255,255,255,0.92);margin:2rem auto;">
-      <form id="login-form" autocomplete="on" style="margin:0;">
-        <div class="form-floating" style="margin-bottom:0.7rem;">
-          <input class="form-control" id="email" name="email" type="email" placeholder="Email" required style="font-size:0.97rem;padding:0.6rem 0.1rem;" />
-          <label for="email" style="font-size:0.93rem;">Email address</label>
+    <div class="main-content">
+      <form id="login-form" autocomplete="on">
+        <div class="form-floating">
+          <input class="form-control" id="email" name="email" type="email" placeholder="Email" required />
+          <label for="email">Email address</label>
         </div>
-        <div class="form-floating" style="margin-bottom:0.7rem;">
-          <input class="form-control" id="password" name="password" type="password" placeholder="Password" required style="font-size:0.97rem;padding:0.6rem 0.1rem;" />
-          <label for="password" style="font-size:0.93rem;">Password</label>
+        <div class="form-floating">
+          <input class="form-control" id="password" name="password" type="password" placeholder="Password" required />
+          <label for="password">Password</label>
         </div>
-        <button type="submit" class="btn-main" style="width:100%;margin:0.5rem 0 0 0;">Login</button>
+        <button type="submit" class="btn-main">Login</button>
       </form>
-      <div id="login-result" style="display:none;margin-top:1rem;text-align:center;font-size:1rem;color:#00897b;"></div>
+      <div id="login-result" style="display:none;margin-top:1rem;text-align:center;font-size:1rem;color:#1565c0;"></div>
       <p class="text-center" style="margin:0.7rem 0 0 0;font-size:0.93rem;">Don't have an account? <a href="/register">Register here</a></p>
     </div>
   </div>
-  <!-- Footer-->
+
+  <!-- Footer -->
   <footer>
     <div class="container">
-      <small>Copyright &copy; DeepView 2025</small>
+      <small>&copy; DeepView 2025</small>
     </div>
   </footer>
+
   <script>
+    // Authentication and login logic
     function logout() {
       document.cookie = 'firebase_id_token=; Max-Age=0; path=/;';
       window.location.href = '/login';
     }
-
-    // If already logged in (cookie exists), redirect to dashboard
+    // Redirect to dashboard if already logged in
     function getCookie(name) {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
@@ -72,7 +74,6 @@
     if (getCookie('firebase_id_token')) {
       window.location.replace('/dashboard');
     }
-
     document.getElementById('login-form').onsubmit = async function(e) {
       e.preventDefault();
       const form = e.target;
@@ -82,13 +83,13 @@
       const res = await fetch('/login_user', {
         method: 'POST',
         body: formData,
-        credentials: 'same-origin' // Ensure cookies are sent/received
+        credentials: 'same-origin'
       });
       const data = await res.json();
       resultDiv.textContent = data.message || 'Login complete.';
       resultDiv.style.display = 'block';
       if (data.success) {
-        window.location.replace('/dashboard'); // Immediate redirect on success
+        window.location.replace('/dashboard');
       }
     };
   </script>

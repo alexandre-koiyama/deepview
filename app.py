@@ -114,8 +114,16 @@ async def login_user(request: Request, firebase_id_token: str = Cookie(None)):
     if firebase_id_token:
         try:
             decoded_token = firebase_auth.verify_id_token(firebase_id_token)
-            # Valid token, redirect to dashboard
-            return RedirectResponse(url="/dashboard", status_code=303)
+            # Valid token, return JSON for frontend redirect
+            response = JSONResponse({"success": True, "message": "Already logged in."})
+            response.set_cookie(
+                key="firebase_id_token",
+                value=firebase_id_token,
+                httponly=True,
+                max_age=60*60*24*30,  # 30 days
+                samesite="lax"
+            )
+            return response
         except Exception:
             pass  # Invalid/expired token, continue to login
 
@@ -132,7 +140,6 @@ async def login_user(request: Request, firebase_id_token: str = Cookie(None)):
         if resp.status_code == 200:
             id_token = resp.json().get("idToken")
             response = JSONResponse({"success": True, "message": "Login successful!"})
-            response = RedirectResponse(url="/dashboard", status_code=303)
             response.set_cookie(
                 key="firebase_id_token",
                 value=id_token,

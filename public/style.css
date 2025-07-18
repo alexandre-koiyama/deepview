@@ -4,8 +4,8 @@
 
 body {
   font-family: 'Lora', serif;
-  background: linear-gradient(135deg, #e0f7fa 0%, #f8fffc 100%);
-  color: #1a3a3a;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f8fffc 100%);
+  color: #183a4a;
   margin: 0;
   min-height: 100vh;
   font-size: 1rem;
@@ -13,7 +13,7 @@ body {
 
 h1, h2, h3 {
   font-family: 'Lora', sans-serif;
-  color: #00897b;
+  color: #1565c0;
   margin: 1.2rem 0 0.7rem;
 }
 h1 { font-size: 1.6rem; }
@@ -21,13 +21,13 @@ h2 { font-size: 1.3rem; }
 h3 { font-size: 1.1rem; }
 
 a {
-  color: #00bfae;
+  color: #1976d2;
   text-decoration: none;
 }
-a:hover { color: #388e3c; }
+a:hover { color: #43e97b; }
 
 .navbar {
-  background: rgba(255,255,255,0.85);
+  background: rgba(21,101,192,0.85);
   border-bottom: 1px solid #b2dfdb;
   box-shadow: 0 2px 8px rgba(33,37,41,0.06);
   padding: 0.7rem 0;
@@ -39,45 +39,46 @@ a:hover { color: #388e3c; }
 }
 .nav-links { display: flex; }
 .nav-link {
-  color: #1a3a3a; font-weight: 700; text-transform: uppercase; margin-left: 1.1rem; font-size: 0.95rem; border-radius: 1rem; padding: 0.2rem 0.7rem;
+  color: #fff; font-weight: 700; text-transform: uppercase; margin-left: 1.1rem; font-size: 0.95rem; border-radius: 1rem; padding: 0.2rem 0.7rem;
+  background: transparent;
 }
-.nav-link.active, .nav-link:hover { color: #fff; background: #00bfae; }
+.nav-link.active, .nav-link:hover { color: #fff; background: #1976d2; }
 
 header.masthead {
   min-height: 200px;
-  background: #b2dfdb center/cover no-repeat;
+  background: #1565c0 center/cover no-repeat;
   display: flex; align-items: center; justify-content: center; position: relative; margin-bottom: 2rem; padding-top: 3.5rem;
 }
 header .overlay {
   position: absolute; top:0;left:0;right:0;bottom:0; background: rgba(255,255,255,0.4);
 }
 .site-heading {
-  position: relative; color: #00897b; text-align: center; z-index: 2; background: rgba(255,255,255,0.7); border-radius: 1rem; padding: 1.2rem 0.7rem;
+  position: relative; color: #1565c0; text-align: center; z-index: 2; background: rgba(255,255,255,0.7); border-radius: 1rem; padding: 1.2rem 0.7rem;
 }
-.site-heading .subheading { color: #388e3c; font-size: 1rem; }
+.site-heading .subheading { color: #43e97b; font-size: 1rem; }
 
 .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
 .main-content {
-  max-width: 400px; margin: 0 auto; padding: 1.1rem 0.7rem; background: rgba(255,255,255,0.92); border-radius: 0.7rem; box-shadow: 0 1px 8px rgba(0,191,174,0.10); position: relative; top: -30px;
+  max-width: 400px; margin: 0 auto; padding: 1.1rem 0.7rem; background: rgba(255,255,255,0.92); border-radius: 0.7rem; box-shadow: 0 1px 8px rgba(33,150,243,0.10); position: relative; top: -30px;
 }
 
 .features {
-  margin: 1.2rem 0; padding: 0.7rem 0.5rem; background: #e0f7fa; border-radius: 0.5rem; font-size: 0.97rem;
+  margin: 1.2rem 0; padding: 0.7rem 0.5rem; background: #e3f2fd; border-radius: 0.5rem; font-size: 0.97rem;
 }
-.feature { padding: 0.4rem 0; color: #00897b; border-bottom: 1px solid #b2dfdb; }
+.feature { padding: 0.4rem 0; color: #1565c0; border-bottom: 1px solid #b2dfdb; }
 .feature:last-child { border-bottom: none; }
 
 .btn-main, .scan-btn, .login-btn, .register-btn {
-  font-family: 'Open Sans', sans-serif; font-weight: 700; border-radius: 1.2rem; padding: 0.7rem 0; background: #00bfae; color: #fff; border: none; width: 100%; margin: 0.4rem 0; font-size: 1rem; cursor: pointer;
+  font-family: 'Open Sans', sans-serif; font-weight: 700; border-radius: 1.2rem; padding: 0.7rem 0; background: #1976d2; color: #fff; border: none; width: 100%; margin: 0.4rem 0; font-size: 1rem; cursor: pointer;
   transition: background 0.2s;
 }
-.btn-main:hover, .scan-btn:hover, .login-btn:hover, .register-btn:hover { background: #43e97b; }
+.btn-main:hover, .scan-btn:hover, .login-btn:hover, .register-btn:hover { background: #2196f3; }
 
 .form-floating { margin-bottom: 0.5rem; }
 .form-control {
-  width: 100%; padding: 0.7rem 0.2rem; font-size: 0.97rem; border: 1px solid #b2dfdb; border-radius: 0.4rem; background: rgba(255,255,255,0.7); color: #1a3a3a;
+  width: 100%; padding: 0.7rem 0.2rem; font-size: 0.97rem; border: 1px solid #b2dfdb; border-radius: 0.4rem; background: rgba(255,255,255,0.7); color: #183a4a;
 }
-.form-control:focus { border-color: #00bfae; outline: none; }
+.form-control:focus { border-color: #1976d2; outline: none; }
 label { font-size: 0.93rem; color: #00897b; }
 
 footer {

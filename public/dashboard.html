@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - DeepView</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <!-- Navigation-->
-  <nav class="navbar" style="box-shadow:0 2px 12px rgba(0,191,174,0.07);background:rgba(255,255,255,0.97);backdrop-filter:blur(6px);">
-    <div class="container" style="display:flex;align-items:center;gap:1.2rem;justify-content:space-between;">
-      <div style="display:flex;align-items:center;gap:0.7rem;">
-        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" style="height:48px;width:auto;display:inline-block;vertical-align:middle;background:rgba(0,137,123,0.07);border-radius:12px;padding:4px 8px;box-shadow:0 1px 6px rgba(0,191,174,0.10);">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo-group">
+        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" class="logo-img">
       </div>
       <div class="nav-links" id="navLinks">
         <a class="nav-link" href="/">Home</a>
@@ -20,27 +20,28 @@
       </div>
     </div>
   </nav>
-  <!-- Page Header-->
-  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=60');position:relative;">
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=60');">
     <div class="overlay"></div>
-    <div class="container" style="position:relative;z-index:2;">
+    <div class="container">
       <div class="site-heading">
-        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60vw;max-width:420px;opacity:0.13;z-index:1;pointer-events:none;user-select:none;">
+        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" class="watermark-img">
         <h1>Your Dashboard</h1>
         <span class="subheading">Analyze ingredients with a single scan</span>
       </div>
     </div>
-    
   </header>
-  <!-- Main Content-->
+
+  <!-- Main Content -->
   <div class="container" style="display:flex;justify-content:center;align-items:center;min-height:50vh;">
-    <div class="main-content" style="max-width:370px;width:100%;padding:1.1rem 0.7rem;box-shadow:0 1px 8px rgba(0,191,174,0.10);border-radius:0.7rem;background:rgba(255,255,255,0.92);margin:2rem auto;">
+    <div class="main-content">
       <div class="dashboard-info text-center">
-        <h2 style="margin-top:0;margin-bottom:0.7rem;font-size:1.2rem;color:#00897b;">Scan Product Ingredients</h2>
-        <p class="lead" style="margin-bottom:1.1rem;font-size:0.97rem;">Just take a picture of the product label and let DeepView analyze the ingredients for you.</p>
+        <h2>Scan Product Ingredients</h2>
+        <p class="lead">Just take a picture of the product label and let DeepView analyze the ingredients for you.</p>
       </div>
       <div class="action-buttons" style="display:flex;gap:0.5rem;justify-content:center;margin-top:1.5rem;width:100%;">
-        <button class="scan-btn" id="open-camera-btn" onclick="openCamera()" style="flex:1 1 120px;min-width:120px;">Open Camera</button>
+        <button class="scan-btn" id="open-camera-btn" onclick="openCamera()">Open Camera</button>
       </div>
       <div class="card camera-wrapper" id="camera-wrapper" style="display:none;flex-direction:column;align-items:center;margin-top:1.2rem;">
         <video id="camera-stream" autoplay playsinline style="background:#000;display:none;width:100%;max-width:320px;border-radius:12px;"></video>
@@ -50,21 +51,19 @@
           <div style="color:#81C3D7;font-weight:bold;margin-top:8px;">Analyzing...</div>
         </div>
       </div>
-      <div id="result-container" style="display:none;margin-top:1.2rem;padding:1rem;background:rgba(224,247,250,0.95);border-radius:0.7rem;box-shadow:0 1px 8px rgba(0,191,174,0.10);color:#00897b;font-size:0.97rem;white-space:pre-line;"></div>
+      <div id="result-container" style="display:none;margin-top:1.2rem;padding:1rem;background:rgba(224,247,250,0.95);border-radius:0.7rem;box-shadow:0 1px 8px rgba(33,150,243,0.10);color:#1565c0;font-size:0.97rem;white-space:pre-line;"></div>
     </div>
   </div>
-  <!-- Footer-->
+
+  <!-- Footer -->
   <footer>
     <div class="container">
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#"><span>Twitter</span></a></li>
-        <li class="list-inline-item"><a href="#"><span>Facebook</span></a></li>
-        <li class="list-inline-item"><a href="#"><span>GitHub</span></a></li>
-      </ul>
-      <small>Copyright &copy; DeepView 2025</small>
+      <small>&copy; DeepView 2025</small>
     </div>
   </footer>
+
   <script>
+    // Camera and image analysis logic
     let stream = null;
     async function openCamera() {
       const video = document.getElementById('camera-stream');
@@ -74,20 +73,20 @@
       const canvas = document.getElementById('snapshot-canvas');
       const loadingIcon = document.getElementById('loading-icon');
       const resultContainer = document.getElementById('result-container');
+      // Reset UI states
       canvas.style.display = 'none';
       loadingIcon.style.display = 'none';
       resultContainer.style.display = 'none';
       openBtn.style.display = 'none';
       wrapper.style.display = 'flex';
       captureBtn.style.display = 'inline-block';
+      // Request camera access
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         try {
-          // Most compatible way to request front camera
-          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" }  } });
+          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } });
           video.srcObject = stream;
           video.style.display = 'block';
         } catch (err) {
-          // fallback to any camera if front is not available
           try {
             stream = await navigator.mediaDevices.getUserMedia({ video: true });
             video.srcObject = stream;
@@ -102,12 +101,14 @@
         captureBtn.style.display = 'none';
       }
     }
+
     document.getElementById('capture-btn').onclick = function() {
       const video = document.getElementById('camera-stream');
       const canvas = document.getElementById('snapshot-canvas');
       const loadingIcon = document.getElementById('loading-icon');
       const captureBtn = document.getElementById('capture-btn');
       const resultContainer = document.getElementById('result-container');
+      // Draw video frame to canvas
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -115,7 +116,7 @@
       video.style.display = 'none';
       captureBtn.style.display = 'none';
       loadingIcon.style.display = 'block';
-      // Stop the camera stream
+      // Stop camera stream
       if (stream) {
         stream.getTracks().forEach(track => track.stop());
       }
@@ -135,7 +136,6 @@
         });
       }, 'image/png');
     };
-   
   </script>
 </body>
 </html>

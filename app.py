@@ -18,6 +18,11 @@ GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 FIREBASE_API_KEY = os.environ.get("FIREBASE_API_KEY")
 FIREBASE_ADMIN_CREDENTIALS = os.environ.get("FIREBASE_ADMIN_CREDENTIALS", "firebase-admin.json")
 
+# Debug: Print environment variable status (remove in production)
+print(f"GOOGLE_API_KEY loaded: {'Yes' if GOOGLE_API_KEY else 'No'}")
+print(f"FIREBASE_API_KEY loaded: {'Yes' if FIREBASE_API_KEY else 'No'}")
+print(f"FIREBASE_ADMIN_CREDENTIALS: {FIREBASE_ADMIN_CREDENTIALS}")
+
 # Initialize Firebase Admin SDK
 if not firebase_admin._apps:
     cred = credentials.Certificate(FIREBASE_ADMIN_CREDENTIALS)

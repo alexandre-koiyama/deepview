@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, Request, Form, Cookie
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import os
 import google.generativeai as genai
@@ -82,7 +82,7 @@ async def analyze_image(file: UploadFile = File(...)):
     )
 
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     response = model.generate_content([
         prompt,
         {
@@ -109,7 +109,17 @@ async def register_user(request: Request):
         return {"success": False, "message": str(e)}
 
 @app.post("/login_user")
-async def login_user(request: Request):
+async def login_user(request: Request, firebase_id_token: str = Cookie(None)):
+    # 1. Check for valid cookie first
+    if firebase_id_token:
+        try:
+            decoded_token = firebase_auth.verify_id_token(firebase_id_token)
+            # Valid token, redirect to dashboard
+            return RedirectResponse(url="/dashboard", status_code=303)
+        except Exception:
+            pass  # Invalid/expired token, continue to login
+
+    # 2. If no valid cookie, process login form
     form = await request.form()
     email = form.get("email")
     password = form.get("password")
@@ -121,12 +131,21 @@ async def login_user(request: Request):
         resp = requests.post(url, json=payload)
         if resp.status_code == 200:
             id_token = resp.json().get("idToken")
-            return {"success": True, "message": "Login successful!", "idToken": id_token}
+            response = JSONResponse({"success": True, "message": "Login successful!"})
+            response = RedirectResponse(url="/dashboard", status_code=303)
+            response.set_cookie(
+                key="firebase_id_token",
+                value=id_token,
+                httponly=True,
+                max_age=60*60*24*30,  # 30 days
+                samesite="lax"
+            )
+            return response
         else:
             msg = resp.json().get("error", {}).get("message", "Login failed.")
-            return {"success": False, "message": msg}
+            return JSONResponse({"success": False, "message": msg})
     except Exception as e:
-        return {"success": False, "message": str(e)}
+        return JSONResponse({"success": False, "message": str(e)})
 
 if not firebase_admin._apps:
     cred = credentials.Certificate("firebase-admin.json")

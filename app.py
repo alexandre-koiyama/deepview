@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, Request, Form, Cookie
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 import os
+import requests
 import google.generativeai as genai
 from PIL import Image
 import io
@@ -9,10 +10,20 @@ import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
 from dotenv import load_dotenv
 
-app = FastAPI()
-
-# Load environment variables from .env file
+# Load environment variables from .env file FIRST
 load_dotenv()
+
+# Get environment variables after loading
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+FIREBASE_API_KEY = os.environ.get("FIREBASE_API_KEY")
+FIREBASE_ADMIN_CREDENTIALS = os.environ.get("FIREBASE_ADMIN_CREDENTIALS", "firebase-admin.json")
+
+# Initialize Firebase Admin SDK
+if not firebase_admin._apps:
+    cred = credentials.Certificate(FIREBASE_ADMIN_CREDENTIALS)
+    firebase_admin.initialize_app(cred)
+
+app = FastAPI()
 
 # Mount static files at /static
 app.mount("/static", StaticFiles(directory="public"), name="static")
@@ -35,14 +46,12 @@ def get_dashboard(firebase_id_token: str = Cookie(None)):
         return FileResponse("public/login.html")
     try:
         decoded_token = firebase_auth.verify_id_token(firebase_id_token)
-        # Optionally, check user info in decoded_token
         return FileResponse("public/dashboard.html")
     except Exception:
         return FileResponse("public/login.html")
 
 @app.post("/analyze")
 async def analyze_image(file: UploadFile = File(...)):
-    GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
     genai.configure(api_key=GOOGLE_API_KEY)
     contents = await file.read()
     image = Image.open(io.BytesIO(contents))
@@ -51,17 +60,15 @@ async def analyze_image(file: UploadFile = File(...)):
     image.save(img_bytes, format="PNG")
     img_bytes = img_bytes.getvalue()
 
-
     with open("cleaned_carcinogens.csv", "r", encoding="utf-8") as csv_file:
         csv_content = csv_file.read()
 
-    #text explanation for the IARC Monographs
+    # Text explanation for the IARC Monographs
     iarc_explanation = ("\n\nLegend:\n"
         "🟥 Group 1 – Carcinogenic to humans: Sufficient evidence in humans.\n"
         "🟧 Group 2A – Probably carcinogenic: Limited evidence in humans, sufficient evidence in animals.\n"
         "🟨 Group 2B – Possibly carcinogenic: Limited evidence in humans, insufficient evidence in animals.\n"
         "🟩 Group 3 – Not classifiable or not carcinogenic: Inadequate evidence or not listed.\n")
-
 
     prompt = (
     "You are a toxicologist and regulatory analyst expert in evaluating product safety, especially based on the IARC Monographs on Carcinogenic Risks to Humans.\n\n"
@@ -80,7 +87,6 @@ async def analyze_image(file: UploadFile = File(...)):
     "If the classification is not 🟩, include a short explanation (max 12 words or less)."
     "Identify the language of the text in the image and respond in that language."
     )
-
 
     model = genai.GenerativeModel("gemini-2.0-flash")
     response = model.generate_content([
@@ -131,12 +137,18 @@ async def login_user(request: Request, firebase_id_token: str = Cookie(None)):
     form = await request.form()
     email = form.get("email")
     password = form.get("password")
+    
+    if not email or not password:
+        return JSONResponse({"success": False, "message": "Email and password are required."})
+    
+    if not FIREBASE_API_KEY:
+        return JSONResponse({"success": False, "message": "Firebase API key not configured."})
+    
     try:
-        import requests
-        FIREBASE_API_KEY = os.environ.get("FIREBASE_API_KEY")
         url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}"
         payload = {"email": email, "password": password, "returnSecureToken": True}
         resp = requests.post(url, json=payload)
+        
         if resp.status_code == 200:
             id_token = resp.json().get("idToken")
             response = JSONResponse({"success": True, "message": "Login successful!"})
@@ -149,15 +161,8 @@ async def login_user(request: Request, firebase_id_token: str = Cookie(None)):
             )
             return response
         else:
-            msg = resp.json().get("error", {}).get("message", "Login failed.")
+            error_data = resp.json()
+            msg = error_data.get("error", {}).get("message", "Login failed.")
             return JSONResponse({"success": False, "message": msg})
     except Exception as e:
-        return JSONResponse({"success": False, "message": str(e)})
-
-if not firebase_admin._apps:
-    cred = credentials.Certificate("firebase-admin.json")
-    firebase_admin.initialize_app(cred)
-
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
-FIREBASE_API_KEY = os.environ.get("FIREBASE_API_KEY")
-FIREBASE_ADMIN_CREDENTIALS = os.environ.get("FIREBASE_ADMIN_CREDENTIALS", "firebase-admin.json")
+        return JSONResponse({"success": False, "message": f"Login error: {str(e)}"})

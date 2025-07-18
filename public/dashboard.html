@@ -11,7 +11,7 @@
   <nav class="navbar">
     <div class="container">
       <div style="display:flex;align-items:center;gap:0.7rem;">
-        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" style="height:48px;width:auto;display:inline-block;vertical-align:middle;background:rgba(0,137,123,0.07);border-radius:12px;padding:4px 8px;box-shadow:0 1px 6px rgba(0,191,174,0.10);">
+        <img src="/static/assets/deepview_logo.png" alt="DeepView Logo" class="logo-img">
       </div>
       <div class="nav-links" id="navLinks">
         <a class="nav-link" href="/">Home</a>
@@ -25,7 +25,7 @@
     <div class="overlay"></div>
     <div class="container" style="position:relative;z-index:2;">
       <div class="site-heading">
-        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60vw;max-width:420px;opacity:0.13;z-index:1;pointer-events:none;user-select:none;">
+        <img src="/static/assets/deepview_logo-removebg-preview.png" alt="DeepView Watermark" class="watermark-img">
         <h1>Your Dashboard</h1>
         <span class="subheading">Analyze ingredients with a single scan</span>
       </div>
@@ -35,21 +35,21 @@
   <div class="container" style="display:flex;justify-content:center;align-items:center;min-height:50vh;">
     <div class="main-content">
       <div class="dashboard-info text-center">
-        <h2 style="margin-top:0;margin-bottom:0.7rem;font-size:1.2rem;color:#00897b;">Scan Product Ingredients</h2>
-        <p class="lead" style="margin-bottom:1.1rem;font-size:0.97rem;">Just take a picture of the product label and let DeepView analyze the ingredients for you.</p>
+        <h2 style="margin-top:0;margin-bottom:0.7rem;font-size:1.2rem;color:#1565c0;">Scan Product Ingredients</h2>
+        <p class="lead">Just take a picture of the product label and let DeepView analyze the ingredients for you.</p>
       </div>
       <div class="action-buttons" style="display:flex;gap:0.5rem;justify-content:center;margin-top:1.5rem;width:100%;">
         <button class="scan-btn" id="open-camera-btn" onclick="openCamera()" style="flex:1 1 120px;min-width:120px;">Open Camera</button>
       </div>
       <div class="card camera-wrapper" id="camera-wrapper" style="display:none;flex-direction:column;align-items:center;margin-top:1.2rem;">
         <video id="camera-stream" autoplay playsinline style="background:#000;display:none;width:100%;max-width:320px;border-radius:12px;"></video>
-        <button class="scan-btn take-btn" id="capture-btn" style="display:none;margin-top:1rem;background:#388e3c;">Take Picture</button>
+        <button class="scan-btn take-btn" id="capture-btn" style="display:none;margin-top:1rem;background:#1976d2;">Take Picture</button>
         <canvas id="snapshot-canvas" style="display:none;margin-top:12px;max-width:320px;border-radius:12px;"></canvas>
         <div id="loading-icon" style="display:none;margin-top:18px;">
-          <div style="color:#81C3D7;font-weight:bold;margin-top:8px;">Analyzing...</div>
+          <div style="color:#2196f3;font-weight:bold;margin-top:8px;">Analyzing...</div>
         </div>
       </div>
-      <div id="result-container" style="display:none;margin-top:1.2rem;padding:1rem;background:rgba(224,247,250,0.95);border-radius:0.7rem;box-shadow:0 1px 8px rgba(0,191,174,0.10);color:#00897b;font-size:0.97rem;white-space:pre-line;"></div>
+      <div id="result-container" style="display:none;margin-top:1.2rem;padding:1rem;background:rgba(227,242,253,0.95);border-radius:0.7rem;box-shadow:0 1px 8px rgba(33,150,243,0.10);color:#1565c0;font-size:0.97rem;white-space:pre-line;"></div>
     </div>
   </div>
   <!-- Footer-->

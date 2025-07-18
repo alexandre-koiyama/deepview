@@ -24,11 +24,45 @@ a {
   color: #1976d2;
   text-decoration: none;
 }
-a:hover { color: #43e97b; }
+a:hover { color: #2196f3; }
+
+/* Layout utilities */
+.text-center { text-align: center; }
+.lead { 
+  font-size: 1.1rem; 
+  font-weight: 400; 
+  color: #183a4a; 
+  margin-bottom: 1.5rem; 
+}
+
+/* Logo and images */
+.logo-img {
+  height: 48px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  background: rgba(21,101,192,0.07);
+  border-radius: 12px;
+  padding: 4px 8px;
+  box-shadow: 0 1px 6px rgba(33,150,243,0.10);
+}
+
+.watermark-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  max-width: 420px;
+  opacity: 0.13;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
 
 .navbar {
   background: rgba(21,101,192,0.85);
-  border-bottom: 1px solid #b2dfdb;
+  border-bottom: 1px solid #bbdefb;
   box-shadow: 0 2px 8px rgba(33,37,41,0.06);
   padding: 0.7rem 0;
   position: fixed; top: 0; width: 100%; z-index: 100;
@@ -55,7 +89,7 @@ header .overlay {
 .site-heading {
   position: relative; color: #1565c0; text-align: center; z-index: 2; background: rgba(255,255,255,0.7); border-radius: 1rem; padding: 1.2rem 0.7rem;
 }
-.site-heading .subheading { color: #43e97b; font-size: 1rem; }
+.site-heading .subheading { color: #2196f3; font-size: 1rem; }
 
 .container { max-width: 900px; margin: 0 auto; padding: 0 1rem; }
 .main-content {
@@ -65,7 +99,7 @@ header .overlay {
 .features {
   margin: 1.2rem 0; padding: 0.7rem 0.5rem; background: #e3f2fd; border-radius: 0.5rem; font-size: 0.97rem;
 }
-.feature { padding: 0.4rem 0; color: #1565c0; border-bottom: 1px solid #b2dfdb; }
+.feature { padding: 0.4rem 0; color: #1565c0; border-bottom: 1px solid #bbdefb; }
 .feature:last-child { border-bottom: none; }
 
 .btn-main, .scan-btn, .login-btn, .register-btn {
@@ -76,19 +110,19 @@ header .overlay {
 
 .form-floating { margin-bottom: 0.5rem; }
 .form-control {
-  width: 100%; padding: 0.7rem 0.2rem; font-size: 0.97rem; border: 1px solid #b2dfdb; border-radius: 0.4rem; background: rgba(255,255,255,0.7); color: #183a4a;
+  width: 100%; padding: 0.7rem 0.2rem; font-size: 0.97rem; border: 1px solid #bbdefb; border-radius: 0.4rem; background: rgba(255,255,255,0.7); color: #183a4a;
 }
 .form-control:focus { border-color: #1976d2; outline: none; }
-label { font-size: 0.93rem; color: #00897b; }
+label { font-size: 0.93rem; color: #1565c0; }
 
 footer {
-  background: rgba(255,255,255,0.7); color: #00897b; padding: 1.2rem 0 0.7rem; text-align: center; margin-top: 2rem; border-top: 1px solid #b2dfdb;
+  background: rgba(255,255,255,0.7); color: #1565c0; padding: 1.2rem 0 0.7rem; text-align: center; margin-top: 2rem; border-top: 1px solid #bbdefb;
 }
 .list-inline { padding-left: 0; list-style: none; margin-bottom: 0.7rem; display: flex; justify-content: center; }
 .list-inline-item { margin: 0 0.4rem; }
-.list-inline-item a { color: #00bfae; font-size: 1.1rem; border-radius: 50%; background: rgba(0,191,174,0.08); padding: 0.3rem 0.7rem; }
-.list-inline-item a:hover { color: #fff; background: #00bfae; }
-footer small { color: #388e3c; font-size: 0.8rem; }
+.list-inline-item a { color: #1976d2; font-size: 1.1rem; border-radius: 50%; background: rgba(33,150,243,0.08); padding: 0.3rem 0.7rem; }
+.list-inline-item a:hover { color: #fff; background: #1976d2; }
+footer small { color: #1565c0; font-size: 0.8rem; }
 
 @media (max-width: 576px) {
   body { font-size: 0.93rem; }
@@ -103,4 +137,6 @@ footer small { color: #388e3c; font-size: 0.8rem; }
   footer { padding: 0.7rem 0 0.5rem; }
   .list-inline-item a { font-size: 1rem; padding: 0.2rem 0.5rem; }
   footer small { font-size: 0.7rem; }
+  .logo-img { height: 40px; padding: 2px 4px; }
+  .lead { font-size: 1rem; }
 }

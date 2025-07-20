@@ -9,6 +9,7 @@ import io
 import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
 from dotenv import load_dotenv
+import subprocess
 
 # Load environment variables from .env file FIRST
 load_dotenv()
@@ -27,6 +28,14 @@ app = FastAPI()
 
 # Mount static files at /static
 app.mount("/static", StaticFiles(directory="public"), name="static")
+
+@app.post("/deploy")
+async def deploy(request: Request):
+    repo_path = "/home/ec2-user/your-repo-name"
+    os.chdir(repo_path)
+    subprocess.run(["git", "pull"])
+    subprocess.run(["sudo", "systemctl", "restart", "fastapi.service"])
+    return {"status": "deployed and restarted"}
 
 @app.get("/")
 def get_index():

@@ -78,7 +78,7 @@ async def analyze_image(file: UploadFile = File(...)):
     "And extract each ingredient you can find in the image. Match it to the IARC reference table.\n"
     "Output must follow this format (no extra explanation or text):\n\n"
     "**Ingredient | IARC Classification | Explanation (if needed)**\n\n"
-    "Legend:\n"
+    "\nLegend:\n"
     "🟥 = Carcinogenic\n"
     "🟧 = Probably carcinogenic\n"
     "🟨 = Possibly carcinogenic\n"

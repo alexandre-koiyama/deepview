@@ -43,6 +43,16 @@ def get_index():
 
 @app.get("/login")
 def get_login():
+    # Check if user is already logged in via cookie
+    firebase_id_token = Cookie(None)
+    if firebase_id_token:
+        try:
+            decoded_token = firebase_auth.verify_id_token(firebase_id_token)
+            return RedirectResponse(url="/dashboard")
+        except Exception:
+            pass
+    # If not logged in, return login page
+
     return FileResponse("public/login.html")
 
 @app.get("/register")

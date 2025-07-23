@@ -38,22 +38,24 @@ async def deploy(request: Request):
     return {"status": "deployed and restarted"}
 
 @app.get("/")
-def get_index():
-    return FileResponse("public/index.html")
+def get_index(firebase_id_token: str = Cookie(None)):
+    if not firebase_id_token:
+        return FileResponse("public/index.html")
+    try:
+        decoded_token = firebase_auth.verify_id_token(firebase_id_token)
+        return FileResponse("public/dashboard.html")
+    except Exception:
+        return FileResponse("public/index.html")
 
 @app.get("/login")
-def get_login():
-    # Check if user is already logged in via cookie
-    firebase_id_token = Cookie(None)
-    if firebase_id_token:
-        try:
-            decoded_token = firebase_auth.verify_id_token(firebase_id_token)
-            return RedirectResponse(url="/dashboard")
-        except Exception:
-            pass
-    # If not logged in, return login page
-
-    return FileResponse("public/login.html")
+def get_login(firebase_id_token: str = Cookie(None)):
+    if not firebase_id_token:
+        return FileResponse("public/login.html")
+    try:
+        decoded_token = firebase_auth.verify_id_token(firebase_id_token)
+        return FileResponse("public/dashboard.html")
+    except Exception:
+        return FileResponse("public/login.html")
 
 @app.get("/register")
 def get_register():

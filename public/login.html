@@ -43,6 +43,10 @@
           <input class="form-control" id="password" name="password" type="password" placeholder="Password" required />
           <label for="password">Password</label>
         </div>
+        <div style="margin:0.7rem 0;">
+          <input type="checkbox" id="rememberEmail" />
+          <label for="rememberEmail">Remember my email</label>
+        </div>
         <button type="submit" class="btn-main">Login</button>
       </form>
       <div id="login-result" style="display:none;margin-top:1rem;text-align:center;font-size:1rem;color:#1565c0;"></div>
@@ -68,12 +72,31 @@
     if (getCookie('firebase_id_token')) {
       window.location.replace('/dashboard');
     }
+    // Prefill email if remembered
+    window.addEventListener('DOMContentLoaded', () => {
+      const rememberedEmail = localStorage.getItem('rememberedEmail');
+      if (rememberedEmail) {
+        document.getElementById('email').value = rememberedEmail;
+        document.getElementById('rememberEmail').checked = true;
+      }
+    });
+
+    // Handle login form submission
     document.getElementById('login-form').onsubmit = async function(e) {
       e.preventDefault();
       const form = e.target;
       const formData = new FormData(form);
       const resultDiv = document.getElementById('login-result');
       resultDiv.style.display = 'none';
+
+      // Remember email if checkbox is checked
+      const email = form.email.value;
+      if (document.getElementById('rememberEmail').checked) {
+        localStorage.setItem('rememberedEmail', email);
+      } else {
+        localStorage.removeItem('rememberedEmail');
+      }
+
       const res = await fetch('/login_user', {
         method: 'POST',
         body: formData,

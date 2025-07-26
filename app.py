@@ -11,15 +11,13 @@ from firebase_admin import credentials, auth as firebase_auth
 from dotenv import load_dotenv
 import subprocess
 
-# Load environment variables from .env file FIRST
+
 load_dotenv()
 
-# Get environment variables after loading
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 FIREBASE_API_KEY = os.environ.get("FIREBASE_API_KEY")
 FIREBASE_ADMIN_CREDENTIALS = os.environ.get("FIREBASE_ADMIN_CREDENTIALS", "firebase-admin.json")
 
-# Initialize Firebase Admin SDK
 if not firebase_admin._apps:
     cred = credentials.Certificate(FIREBASE_ADMIN_CREDENTIALS)
     firebase_admin.initialize_app(cred)

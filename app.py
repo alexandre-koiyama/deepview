@@ -27,14 +27,6 @@ app = FastAPI()
 # Mount static files at /static
 app.mount("/static", StaticFiles(directory="public"), name="static")
 
-@app.post("/webhook")
-async def webhook(request: Request):
-    import subprocess
-    payload = await request.json()
-    # Optional: Validate payload here
-    subprocess.Popen(["/bin/bash", "/home/ec2-user/deepview/deploy.sh"])
-    return {"status": "ok"}
-
 @app.get("/")
 def get_index(firebase_id_token: str = Cookie(None)):
     if not firebase_id_token:

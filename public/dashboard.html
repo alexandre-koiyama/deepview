@@ -108,9 +108,7 @@
       canvas.style.display = 'block';
       video.style.display = 'none';
       loadingIcon.style.display = 'block';
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
+      // Do NOT stop the stream here
       canvas.toBlob(function(blob) {
         const formData = new FormData();
         formData.append('file', blob, 'snapshot.png');
@@ -123,6 +121,12 @@
           loadingIcon.style.display = 'none';
           resultContainer.textContent = data.result;
           resultContainer.style.display = 'block';
+          // Reset UI for another picture
+          video.style.display = 'block';
+          canvas.style.display = 'none';
+          captureBtn.style.display = 'inline-block';
+          // Optionally, restart the camera if needed
+          // openCamera();
         });
       }, 'image/png');
     };

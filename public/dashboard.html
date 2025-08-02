@@ -107,7 +107,6 @@
       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
       canvas.style.display = 'block';
       video.style.display = 'none';
-      captureBtn.style.display = 'none';
       loadingIcon.style.display = 'block';
       if (stream) {
         stream.getTracks().forEach(track => track.stop());

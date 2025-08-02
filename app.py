@@ -11,7 +11,6 @@ from firebase_admin import credentials, auth as firebase_auth
 from dotenv import load_dotenv
 import subprocess
 
-
 load_dotenv()
 
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
@@ -24,7 +23,6 @@ if not firebase_admin._apps:
 
 app = FastAPI()
 
-# Mount static files at /static
 app.mount("/static", StaticFiles(directory="public"), name="static")
 
 @app.get("/")

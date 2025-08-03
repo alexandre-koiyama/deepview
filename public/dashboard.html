@@ -50,6 +50,7 @@
         <div id="loading-icon" style="display:none;margin-top:18px;">
           <div style="color:#2196f3;font-weight:bold;margin-top:8px;">Analyzing...</div>
         </div>
+        <button class="scan-btn" id="take-again-btn" style="display:none;margin-top:1rem;background:#1565c0;">Take Again</button>
       </div>
       <div id="result-container" style="display:none;margin-top:1.2rem;padding:1rem;background:rgba(227,242,253,0.95);border-radius:0.7rem;box-shadow:0 1px 8px rgba(33,150,243,0.10);color:#1565c0;font-size:0.97rem;white-space:pre-line;"></div>
     </div>
@@ -108,7 +109,6 @@
       canvas.style.display = 'block';
       video.style.display = 'none';
       loadingIcon.style.display = 'block';
-      // Do NOT stop the stream here
       canvas.toBlob(function(blob) {
         const formData = new FormData();
         formData.append('file', blob, 'snapshot.png');
@@ -121,14 +121,26 @@
           loadingIcon.style.display = 'none';
           resultContainer.textContent = data.result;
           resultContainer.style.display = 'block';
-          // Reset UI for another picture
-          video.style.display = 'block';
-          canvas.style.display = 'none';
-          captureBtn.style.display = 'inline-block';
-          // Optionally, restart the camera if needed
-          openCamera();
+          // Show the 'Take Again' button
+          document.getElementById('take-again-btn').style.display = 'inline-block';
         });
       }, 'image/png');
+    // Handle 'Take Again' button click
+    document.getElementById('take-again-btn').onclick = function() {
+      const video = document.getElementById('camera-stream');
+      const canvas = document.getElementById('snapshot-canvas');
+      const loadingIcon = document.getElementById('loading-icon');
+      const resultContainer = document.getElementById('result-container');
+      const captureBtn = document.getElementById('capture-btn');
+      const takeAgainBtn = document.getElementById('take-again-btn');
+      // Reset UI
+      canvas.style.display = 'none';
+      resultContainer.style.display = 'none';
+      takeAgainBtn.style.display = 'none';
+      captureBtn.style.display = 'inline-block';
+      // Restart camera
+      openCamera();
+    };
     };
   </script>
 </body>

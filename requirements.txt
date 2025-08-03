@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-pillow
-google-generativeai
-python-multipart
-firebase-admin
-requests
-python-dotenv

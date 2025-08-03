@@ -86,12 +86,17 @@ async def analyze_image(file: UploadFile = File(...)):
     f"{csv_content}\n\n"
     "And extract each ingredient you can find in the image. Match it to the IARC reference table.\n"
     "Output must follow this format (no extra explanation or text):\n\n"
-    "**Ingredient | IARC Classification | Explanation (if needed)**\n\n"
+    "**Ingredient | IARC Classification | Explanation**\n\n"
     "\nLegend:\n"
     "🟥 = Carcinogenic\n"
     "🟧 = Probably carcinogenic\n"
     "🟨 = Possibly carcinogenic\n"
     "🟩 = Not classifiable or not carcinogenic\n\n"
+
+    "In the EXPLANATION:\n"
+    "- Briefly describe the ingredient’s source (e.g., synthetic, natural, petroleum-derived, etc.)\n"
+    "- List the most common product categories it is found in (from most to least common, max 5)\n"
+    "- Use a short and informative sentence (max 18 words)\n"
     
     "If the classification is not 🟩, include a short explanation (max 12 words or less)."
     "Identify the language of the text in the image and respond in that language."

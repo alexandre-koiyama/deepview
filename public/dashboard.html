@@ -119,9 +119,10 @@
           loadingIcon.style.display = 'none';
           resultContainer.textContent = data.result;
           resultContainer.style.display = 'block';
-          // After analysis, show the Take Picture button again for another scan
-          captureBtn.style.display = 'inline-block';
-          video.style.display = 'none';
+          // After analysis, reopen the camera for another scan
+          setTimeout(() => {
+            openCamera();
+          }, 1000);
         });
       }, 'image/png');
     };

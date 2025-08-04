@@ -50,7 +50,7 @@
         <div id="loading-icon" style="display:none;margin-top:18px;">
           <div style="color:#2196f3;font-weight:bold;margin-top:8px;">Analyzing...</div>
         </div>
-        <button class="scan-btn" id="take-again-btn" style="display:none;margin-top:1rem;background:#1565c0;">Take Again</button>
+
       </div>
       <div id="result-container" style="display:none;margin-top:1.2rem;padding:1rem;background:rgba(227,242,253,0.95);border-radius:0.7rem;box-shadow:0 1px 8px rgba(33,150,243,0.10);color:#1565c0;font-size:0.97rem;white-space:pre-line;"></div>
     </div>
@@ -70,13 +70,13 @@
     const canvas = document.getElementById('snapshot-canvas');
     const loadingIcon = document.getElementById('loading-icon');
     const resultContainer = document.getElementById('result-container');
-    const takeAgainBtn = document.getElementById('take-again-btn');
+
 
     async function openCamera() {
       canvas.style.display = 'none';
       loadingIcon.style.display = 'none';
       resultContainer.style.display = 'none';
-      takeAgainBtn.style.display = 'none';
+
       openBtn.style.display = 'none';
       wrapper.style.display = 'flex';
       captureBtn.style.display = 'inline-block';
@@ -122,7 +122,7 @@
           // After analysis, reopen the camera for another scan
           setTimeout(() => {
             openCamera();
-          }, 1000);
+          }, 1200);
         });
       }, 'image/png');
     };

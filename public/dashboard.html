@@ -63,52 +63,50 @@
   </footer>
   <script>
     let stream = null;
+    const video = document.getElementById('camera-stream');
+    const wrapper = document.getElementById('camera-wrapper');
+    const openBtn = document.getElementById('open-camera-btn');
+    const captureBtn = document.getElementById('capture-btn');
+    const canvas = document.getElementById('snapshot-canvas');
+    const loadingIcon = document.getElementById('loading-icon');
+    const resultContainer = document.getElementById('result-container');
+    const takeAgainBtn = document.getElementById('take-again-btn');
+
     async function openCamera() {
-      const video = document.getElementById('camera-stream');
-      const wrapper = document.getElementById('camera-wrapper');
-      const openBtn = document.getElementById('open-camera-btn');
-      const captureBtn = document.getElementById('capture-btn');
-      const canvas = document.getElementById('snapshot-canvas');
-      const loadingIcon = document.getElementById('loading-icon');
-      const resultContainer = document.getElementById('result-container');
       canvas.style.display = 'none';
       loadingIcon.style.display = 'none';
       resultContainer.style.display = 'none';
+      takeAgainBtn.style.display = 'none';
       openBtn.style.display = 'none';
       wrapper.style.display = 'flex';
       captureBtn.style.display = 'inline-block';
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         try {
-          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" }  } });
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
           video.srcObject = stream;
           video.style.display = 'block';
-        } catch (err) {
-          try {
-            stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            video.srcObject = stream;
-            video.style.display = 'block';
-          } catch (error) {
-            alert('Unable to access camera: ' + error.message);
-            captureBtn.style.display = 'none';
-          }
+        } catch (error) {
+          alert('Unable to access camera: ' + error.message);
+          captureBtn.style.display = 'none';
         }
       } else {
         alert('Camera not supported on this device/browser.');
         captureBtn.style.display = 'none';
       }
     }
-    document.getElementById('capture-btn').onclick = function() {
-      const video = document.getElementById('camera-stream');
-      const canvas = document.getElementById('snapshot-canvas');
-      const loadingIcon = document.getElementById('loading-icon');
-      const captureBtn = document.getElementById('capture-btn');
-      const resultContainer = document.getElementById('result-container');
+
+    captureBtn.onclick = async function() {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
       canvas.style.display = 'block';
       video.style.display = 'none';
+      captureBtn.style.display = 'none';
       loadingIcon.style.display = 'block';
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
       canvas.toBlob(function(blob) {
         const formData = new FormData();
         formData.append('file', blob, 'snapshot.png');
@@ -121,26 +119,11 @@
           loadingIcon.style.display = 'none';
           resultContainer.textContent = data.result;
           resultContainer.style.display = 'block';
-          // Show the 'Take Again' button
-          document.getElementById('take-again-btn').style.display = 'inline-block';
+          // After analysis, show the Take Picture button again for another scan
+          captureBtn.style.display = 'inline-block';
+          video.style.display = 'none';
         });
       }, 'image/png');
-    // Handle 'Take Again' button click
-    document.getElementById('take-again-btn').onclick = function() {
-      const video = document.getElementById('camera-stream');
-      const canvas = document.getElementById('snapshot-canvas');
-      const loadingIcon = document.getElementById('loading-icon');
-      const resultContainer = document.getElementById('result-container');
-      const captureBtn = document.getElementById('capture-btn');
-      const takeAgainBtn = document.getElementById('take-again-btn');
-      // Reset UI
-      canvas.style.display = 'none';
-      resultContainer.style.display = 'none';
-      takeAgainBtn.style.display = 'none';
-      captureBtn.style.display = 'inline-block';
-      // Restart camera
-      openCamera();
-    };
     };
   </script>
 </body>
